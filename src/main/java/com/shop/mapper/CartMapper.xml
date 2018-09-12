@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.dao.CartMapper">
+  <resultMap id="BaseResultMap" type="com.shop.model.Cart">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="resume" jdbcType="VARCHAR" property="resume" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="prices" jdbcType="INTEGER" property="prices" />
+    <result column="freight" jdbcType="INTEGER" property="freight" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="closeid" jdbcType="INTEGER" property="closeid" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, img	,title , resume , number, prices, freight, userid, closeid, total
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shoppingcart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shoppingcart
+  </select>
+  
+   <select id="queryAll" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shoppingcart
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  
+ 
+  <select id="queryByUseridAndCloseid" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shoppingcart
+    where userid = #{0}
+    and closeid = #{1}
+  </select>
+  
+  
+   <select id="queryOne"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shoppingcart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+ 
+  <delete id="deleteAll" parameterType="java.lang.Integer">
+    delete from shoppingcart
+    where userid = #{userid,jdbcType=INTEGER}
+    
+  </delete>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shoppingcart
+    where id = #{0}
+     and userid = #{1}
+  </delete>
+  
+  <insert id="insert" parameterType="com.shop.model.Cart">
+    insert into shoppingcart (id, img, title,resume,
+      number, prices,freight)
+    values (#{id,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{resume,jdbcType=VARCHAR},
+       #{number,jdbcType=INTEGER}, #{prices,jdbcType=INTEGER},
+       #{freight,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.shop.model.Cart">
+    insert into shoppingcart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="resume != null">
+        resume,
+      </if>
+       <if test="number != null">
+        number,
+      </if>
+       <if test="prices != null">
+        prices,
+      </if>
+       <if test="freight != null">
+        freight,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="closeid != null">
+        closeid,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="resume != null">
+        #{resume,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="prices != null">
+        #{prices,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null">
+        #{freight,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="closeid != null">
+        #{closeid,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateCart" >
+    update shoppingcart
+    set
+    number = #{number},
+    total = #{total}
+    where id = #{id,jdbcType=INTEGER}
+    
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.model.Cart">
+    update shoppingcart
+    <set>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="resume != null">
+        resume = #{resume,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="prices != null">
+        prices = #{prices,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null">
+        freight = #{freight,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="closeid != null">
+        closeid = #{closeid,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.model.Cart">
+    update user
+    set img = #{img,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      resume = #{resume,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      prices = #{prices,jdbcType=INTEGER},
+      freight = #{freight,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      closeid = #{closeid,jdbcType=INTEGER},
+      total = #{total,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

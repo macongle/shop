@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.dao.CloseMapper">
+  <resultMap id="BaseResultMap" type="com.shop.model.Close">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="imgAddress" jdbcType="VARCHAR" property="imgAddress" />
+    <result column="style" jdbcType="VARCHAR" property="style" />
+    <result column="prices" jdbcType="INTEGER" property="prices" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="seller" jdbcType="INTEGER" property="seller" />
+    <result column="resume" jdbcType="VARCHAR" property="resume" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, imgAddress	,style, prices,title,seller,resume
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from close
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from close
+  </select>
+  
+  <select id="selectlimit"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from close 
+    order by seller desc
+    limit 4
+  </select> 
+  
+  <select id="queryOne"  parameterType="com.shop.model.Close" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from close
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBySth"  parameterType="com.shop.model.Close" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from close
+    where imgAddress = #{imgAddress,jdbcType=VARCHAR} and
+    title = #{title,jdbcType=VARCHAR} and resume = #{resume,jdbcType=VARCHAR} 
+    and prices = #{prices,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from close
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.shop.model.Close">
+    insert into close (id, imgAddress, 
+      style, prices,title,seller)
+    values (#{id,jdbcType=INTEGER}, #{imgAddress,jdbcType=VARCHAR}, 
+      #{style,jdbcType=VARCHAR}, #{prices,jdbcType=INTEGER},
+       #{title,jdbcType=VARCHAR}, #{seller,jdbcType=INTEGER},
+       #{resume,jdbcType=VARCHAR})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.shop.model.Close">
+    insert into close
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="imgAddress != null">
+        imgAddress,
+      </if>
+      <if test="style != null">
+        style,
+      </if>
+      <if test="prices != null">
+        prices,
+      </if>
+       <if test="title != null">
+        title,
+      </if>
+       <if test="seller != null">
+        seller,
+      </if>
+       <if test="resume != null">
+        resume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imgAddress != null">
+        #{imgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null">
+        #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="prices != null">
+        #{prices,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        #{seller,jdbcType=INTEGER},
+      </if>
+      <if test="resume != null">
+        #{resume,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.model.Close">
+    update close
+    <set>
+      <if test="imgAddress != null">
+        imgAddress = #{imgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null">
+        style = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="prices != null">
+        prices = #{prices,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        seller = #{seller,jdbcType=INTEGER},
+      </if>
+      <if test="resume != null">
+        resume = #{resume,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.model.Close">
+    update user
+    set imgAddress = #{imgAddress,jdbcType=VARCHAR},
+      style = #{style,jdbcType=VARCHAR},
+      prices = #{prices,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      seller = #{prices,jdbcType=INTEGER},
+      resume = #{resume,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
